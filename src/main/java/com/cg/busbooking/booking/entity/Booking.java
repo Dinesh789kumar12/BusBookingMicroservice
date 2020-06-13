@@ -83,10 +83,6 @@ public class Booking {
 		this.gender = gender;
 	}
 
-	public Booking() {
-		super();
-	}
-
 	public long getPhone() {
 		return phone;
 	}
@@ -100,19 +96,6 @@ public class Booking {
 	}
 
 	public void setTravelDate(LocalDate travelDate) {
-		this.travelDate = travelDate;
-	}
-
-	public Booking(int bookingId, int userId, int busId, String name, int age, String gender, long phone,
-			LocalDate travelDate) {
-		super();
-		this.bookingId = bookingId;
-		this.userId = userId;
-		this.busId = busId;
-		this.name = name;
-		this.age = age;
-		this.gender = gender;
-		this.phone = phone;
 		this.travelDate = travelDate;
 	}
 }

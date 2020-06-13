@@ -1,9 +1,7 @@
 package com.cg.busbooking.booking.service;
 
-import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,18 +12,13 @@ import com.cg.busbooking.booking.exception.BookingIdNotFound;
 import com.cg.busbooking.booking.exception.BookingNameNotFound;
 
 @Service
-public class BookingService {
+public class BookingServiceImpl implements IBookingService {
 
 	@Autowired
 	BookingRepository repository;
 
-	public Set<Booking> getBookingDetails() {
-		ArrayList<Booking> bookingList = (ArrayList<Booking>) repository.findAll();
-		HashSet<Booking> bookingSet = new HashSet<Booking>();
-		for (Booking mr : bookingList) {
-			bookingSet.add(mr);
-		}
-		return bookingSet;
+	public List<Booking> getBookingDetails() {
+		return repository.findAll();
 	}
 
 	public Booking getBookingById(int bookingId) throws BookingIdNotFound {

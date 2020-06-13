@@ -1,6 +1,6 @@
 package com.cg.busbooking.booking.controller;
 
-import java.util.HashSet;
+import java.util.List;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Max;
@@ -23,19 +23,19 @@ import org.springframework.web.bind.annotation.RestController;
 import com.cg.busbooking.booking.entity.Booking;
 import com.cg.busbooking.booking.exception.BookingIdNotFound;
 import com.cg.busbooking.booking.exception.BookingNameNotFound;
-import com.cg.busbooking.booking.service.BookingService;
+import com.cg.busbooking.booking.service.BookingServiceImpl;
 
 @RestController
 @RequestMapping(value = "/booking")
 @Validated
 public class BookingController {
 	@Autowired
-	BookingService service;
+	BookingServiceImpl service;
 
 	// http://localhost:9095/booking/bookingdetails
 	@GetMapping("/bookingdetails")
-	public HashSet<Booking> getAllRouteDetails() {
-		return (HashSet<Booking>) service.getBookingDetails();
+	public List<Booking> getAllRouteDetails() {
+		return service.getBookingDetails();
 	}
 
 	// http://localhost:9095/booking/bookingdetailsbyId
@@ -60,7 +60,7 @@ public class BookingController {
 	// http://localhost:9095/booking/fetchbookingByname
 	@GetMapping("/fetchbookingByname/{name}")
 	public ResponseEntity<Booking> getBooking(@PathVariable("name") String name) throws BookingNameNotFound {
-		return new ResponseEntity<Booking>(service.getBooking(name), HttpStatus.ACCEPTED);
+		return new ResponseEntity<>(service.getBooking(name), HttpStatus.ACCEPTED);
 	}
 
 	// http://localhost:9095/booking/updatebookingById
