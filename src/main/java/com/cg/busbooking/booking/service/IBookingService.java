@@ -14,9 +14,9 @@ public interface IBookingService {
 
 	public String deleteBookingById(int bookingId) throws BookingIdNotFound;
 
-	public String updateBookingById(int bid, long phone) throws BookingIdNotFound;
+	public String updateBookingById(int bid, String phone) throws BookingIdNotFound;
 
-	public void addBooking(Booking booking);
+	public String addBooking(Booking booking);
 
 	public Booking getBooking(String name) throws BookingNameNotFound;
 }

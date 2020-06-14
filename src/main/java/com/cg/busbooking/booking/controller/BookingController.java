@@ -1,7 +1,15 @@
+/****************************************************************************************************************************
+ - File Name        : BookingController
+ - Author           : Dinesh Kumar
+ - Creation Date    : 11-06-2020
+ - Description      : This is endpoint controller to use and to support Busbooking Microservice
+  ****************************************************************************************************************************/
+
 package com.cg.busbooking.booking.controller;
 
 import java.util.List;
 
+import javax.validation.ConstraintViolationException;
 import javax.validation.Valid;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -23,56 +31,86 @@ import org.springframework.web.bind.annotation.RestController;
 import com.cg.busbooking.booking.entity.Booking;
 import com.cg.busbooking.booking.exception.BookingIdNotFound;
 import com.cg.busbooking.booking.exception.BookingNameNotFound;
-import com.cg.busbooking.booking.service.BookingServiceImpl;
+import com.cg.busbooking.booking.service.IBookingService;
 
 @RestController
 @RequestMapping(value = "/booking")
 @Validated
 public class BookingController {
 	@Autowired
-	BookingServiceImpl service;
+	private IBookingService service;
 
-	// http://localhost:9095/booking/bookingdetails
+	/****************************************************************************************************************************
+	 * - Method Name : getAllBookingDetails() - Return type : List<Booking> -
+	 * Description : To retrieve list of booking details from Booking Database
+	 * -End-point : http://localhost:9095/booking/bookingdetails
+	 ****************************************************************************************************************************/
 	@GetMapping("/bookingdetails")
-	public List<Booking> getAllRouteDetails() {
+	public List<Booking> getAllBookingDetails() {
 		return service.getBookingDetails();
 	}
 
-	// http://localhost:9095/booking/bookingdetailsbyId
+	/****************************************************************************************************************************
+	 * - Method Name : getBookingById - Input Parameters : BookingDto bookingId -
+	 * Return type : Booking - Description : To get Booking Detail by Id from
+	 * database -End-point : http://localhost:9095/booking/bookingdetailsbyId
+	 ****************************************************************************************************************************/
 	@GetMapping("/bookingdetailsbyId/{bookingId}")
 	public Booking getBookingById(@PathVariable("bookingId") @Min(1000) @Max(2000) int bookingId)
 			throws BookingIdNotFound {
 		return service.getBookingById(bookingId);
 	}
 
-	// http://localhost:9095/booking/delete
+	/****************************************************************************************************************************
+	 * - Method Name : deleteBookingById - Input Parameters : BookingDto bookingId -
+	 * Return type : ResponseEntity<String> - Description : To delete booking by id
+	 * -End-point : http://localhost:9095/booking/delete
+	 ****************************************************************************************************************************/
 	@DeleteMapping("/delete/{bookingId}")
-	public ResponseEntity<String> deleteRoute(@PathVariable("bookingId") int bookingId) throws BookingIdNotFound {
+	public ResponseEntity<String> deleteBookingById(@PathVariable("bookingId") int bookingId) throws BookingIdNotFound {
 		return ResponseEntity.ok(service.deleteBookingById(bookingId));
 	}
 
-	// http://localhost:9095/booking/
+	/****************************************************************************************************************************
+	 * - Method Name : addBooking - Input Parameters : booking - Return type :
+	 * ResponseEntity<String> - Description : To add booking into the database
+	 * -End-point : http://localhost:9095/booking/
+	 ****************************************************************************************************************************/
 	@PostMapping("/")
-	public void addBooking(@Valid @RequestBody Booking booking) {
-		service.addBooking(booking);
+	public ResponseEntity<String> addBooking(@Valid @RequestBody Booking booking) {
+		return ResponseEntity.ok(service.addBooking(booking));
 	}
 
-	// http://localhost:9095/booking/fetchbookingByname
+	/****************************************************************************************************************************
+	 * - Method Name : getBookingByName - Input Parameters : BookingDto bookingId -
+	 * Return type : ResponseEntity<Booking> - Description : To get Booking By Name
+	 * -End-point : http://localhost:9095/booking/fetchbookingByname
+	 ****************************************************************************************************************************/
 	@GetMapping("/fetchbookingByname/{name}")
-	public ResponseEntity<Booking> getBooking(@PathVariable("name") String name) throws BookingNameNotFound {
+	public ResponseEntity<Booking> getBookingByName(@PathVariable("name") String name) throws BookingNameNotFound {
 		return new ResponseEntity<>(service.getBooking(name), HttpStatus.ACCEPTED);
 	}
 
-	// http://localhost:9095/booking/updatebookingById
+	/****************************************************************************************************************************
+	 * - Method Name : updatebookingById - Input Parameters : BookingDto
+	 * bookingId,phone - Return type : ResponseEntity<String> - Description : To
+	 * update phone number of booking by bid -End-point :
+	 * http://localhost:9095/booking/updatebookingById
+	 ****************************************************************************************************************************/
 	@GetMapping("/updatebookingById/{bid}/{phone}")
-	public String updateBookingById(@PathVariable("bid") int bid, @PathVariable("phone") long phone)
+	public ResponseEntity<String> updateBookingById(@PathVariable("bid") int bid, @PathVariable("phone") String phone)
 			throws BookingIdNotFound {
-		return service.updateBookingById(bid, phone);
+		return ResponseEntity.ok(service.updateBookingById(bid, phone));
 	}
 
-	@ExceptionHandler(Exception.class)
+	/****************************************************************************************************************************
+	 * - Method Name : handleConstraintViolation - Return type :
+	 * ResponseEntity<String> - Description : To handle unwanted exceptionwith
+	 * javax-validation constraint
+	 ****************************************************************************************************************************/
+	@ExceptionHandler(ConstraintViolationException.class)
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
-	ResponseEntity<String> handleConstraintViolation(Exception e) {
+	ResponseEntity<String> handleConstraintViolation(ConstraintViolationException e) {
 		return new ResponseEntity<>(": " + e.getMessage(), HttpStatus.BAD_REQUEST);
 	}
 

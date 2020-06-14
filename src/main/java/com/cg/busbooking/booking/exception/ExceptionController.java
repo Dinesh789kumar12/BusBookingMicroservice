@@ -9,7 +9,15 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class ExceptionController {
 
 	@ExceptionHandler(BookingIdNotFound.class)
-	public ResponseEntity<ErrorMessage> handleException(BookingIdNotFound e) {
+	public ResponseEntity<ErrorMessage> handleExceptionById(BookingIdNotFound e) {
+		ErrorMessage error = new ErrorMessage();
+		error.setStatusCode(HttpStatus.BAD_GATEWAY.value());
+		error.setErrorMessage(e.getMessage());
+		return new ResponseEntity<>(error, HttpStatus.OK);
+	}
+
+	@ExceptionHandler(BookingNameNotFound.class)
+	public ResponseEntity<ErrorMessage> handleExceptionByName(BookingNameNotFound e) {
 		ErrorMessage error = new ErrorMessage();
 		error.setStatusCode(HttpStatus.BAD_GATEWAY.value());
 		error.setErrorMessage(e.getMessage());

@@ -8,6 +8,6 @@ import com.cg.busbooking.booking.entity.Booking;
 
 @Repository
 public interface BookingRepository extends JpaRepository<Booking, Integer> {
-	@Query("Select book from Booking book where book.name=?1")
+	@Query("Select booking from Booking booking where booking.name=?1")
 	public Booking getBookingDetails(String name);
 }

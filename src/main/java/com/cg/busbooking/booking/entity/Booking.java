@@ -5,10 +5,14 @@ import java.time.LocalDate;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.validation.constraints.Future;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
@@ -17,23 +21,33 @@ import org.springframework.format.annotation.DateTimeFormat.ISO;
 public class Booking {
 	@Id
 	@Column(name = "booking_Id")
+	@Min(1000)@Max(2000)
+	@NotNull(message = "Booking Id has not been null")
 	private int bookingId;
 	@Column(name = "user_Id")
 	private int userId;
 	@Column(name = "bus_Id")
 	private int busId;
 	@NotNull(message = "Name cannnot be null")
-	@NotBlank(message = "Name cannot be blank")
+	@NotBlank(message = "Name is Mandatory")
+	@Size(min = 3,max=10)
+	@Pattern(regexp = "^[A-Za-z]*",message = "Name field Should not have Special Characters\nName Cant have Numeric Values")
 	private String name;
 	@Min(value = 2, message = "Age cannot be smaller than 2")
 	@Max(value = 60, message = "Age cannot be larger than 60")
 	private int age;
 	@NotNull(message = "Gender is required either it is Male/Female")
+	@NotEmpty(message = "Gender field Should not be empty")
+	@Pattern(regexp = "[A-Za-z]*",message = " Gender field Should not have Special Characters  Gender field Should not have numbers")
 	private String gender;
-	@NotNull(message = "Phone number cannot be null")
-	private long phone;
+	@NotBlank(message = "Phone number cannot be blank")
+	@Size(min = 10,max = 10)
+	@Pattern(regexp="(^$|[0-9]{10})")
+	private  String phone;
 	@DateTimeFormat(iso = ISO.DATE)
+	@NotNull @Future
 	private LocalDate travelDate;
+	
 
 	public int getBookingId() {
 		return bookingId;
@@ -83,11 +97,11 @@ public class Booking {
 		this.gender = gender;
 	}
 
-	public long getPhone() {
+	public String getPhone() {
 		return phone;
 	}
 
-	public void setPhone(long phone) {
+	public void setPhone(String phone) {
 		this.phone = phone;
 	}
 
