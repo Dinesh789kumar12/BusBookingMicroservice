@@ -4,10 +4,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import com.cg.busbooking.booking.entity.Booking;
+import com.cg.busbooking.booking.entity.BookingEntity;
 
 @Repository
-public interface BookingRepository extends JpaRepository<Booking, Integer> {
+public interface BookingRepository extends JpaRepository<BookingEntity, Integer> {
 	@Query("Select booking from Booking booking where booking.name=?1")
-	public Booking getBookingDetails(String name);
+	public BookingEntity getBookingDetails(String name);
 }

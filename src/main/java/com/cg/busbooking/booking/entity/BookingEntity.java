@@ -18,7 +18,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
 
 @Entity
-public class Booking {
+public class BookingEntity {
 	@Id
 	@Column(name = "booking_Id")
 	@Min(1000)@Max(2000)

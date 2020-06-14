@@ -14,7 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cg.busbooking.booking.dao.BookingRepository;
-import com.cg.busbooking.booking.entity.Booking;
+import com.cg.busbooking.booking.dto.Booking;
+import com.cg.busbooking.booking.entity.BookingEntity;
 import com.cg.busbooking.booking.exception.BookingIdNotFound;
 import com.cg.busbooking.booking.exception.BookingNameNotFound;
 
@@ -29,7 +30,7 @@ public class BookingServiceImpl implements IBookingService {
 	 * Booking - Creation Date : 10-06-2020 - Description : To get all detail Bus
 	 * booking information from the database.
 	 ****************************************************************************************************************************/
-	public List<Booking> getBookingDetails() {
+	public List<BookingEntity> getBookingDetails() {
 		return repository.findAll();
 	}
 
@@ -38,8 +39,8 @@ public class BookingServiceImpl implements IBookingService {
 	 * Return type : Booking - Creation Date : 10-06-2020 - Description : To get
 	 * specific detail booking by bookingId from the database.
 	 ****************************************************************************************************************************/
-	public Booking getBookingById(int bookingId) throws BookingIdNotFound {
-		Optional<Booking> optional = repository.findById(bookingId);
+	public BookingEntity getBookingById(int bookingId) throws BookingIdNotFound {
+		Optional<BookingEntity> optional = repository.findById(bookingId);
 		if (optional.isPresent()) {
 			return optional.get();
 		} else {
@@ -53,7 +54,7 @@ public class BookingServiceImpl implements IBookingService {
 	 * Bus booking by bookingId from the database.
 	 ****************************************************************************************************************************/
 	public String deleteBookingById(int bookingId) throws BookingIdNotFound {
-		Optional<Booking> optional = repository.findById(bookingId);
+		Optional<BookingEntity> optional = repository.findById(bookingId);
 		if (optional.isPresent()) {
 			repository.deleteById(bookingId);
 		} else {
@@ -68,8 +69,8 @@ public class BookingServiceImpl implements IBookingService {
 	 * phone number by bookingId from the booking table.
 	 ****************************************************************************************************************************/
 	public String updateBookingById(int bid, String phone) throws BookingIdNotFound {
-		Optional<Booking> optional = repository.findById(bid);
-		Booking booking = null;
+		Optional<BookingEntity> optional = repository.findById(bid);
+		BookingEntity booking = null;
 		if (optional.isPresent()) {
 			booking = optional.get();
 			booking.setPhone(phone);
@@ -86,7 +87,15 @@ public class BookingServiceImpl implements IBookingService {
 	 * Booking information entered by admin into the database.
 	 ****************************************************************************************************************************/
 	public String addBooking(Booking booking) {
-		repository.save(booking);
+		BookingEntity entity = new BookingEntity();
+		entity.setAge(booking.getAge());
+		entity.setBookingId(booking.getBookingId());
+		entity.setBusId(booking.getBusId());
+		entity.setGender(booking.getGender());
+		entity.setPhone(booking.getPhone());
+		entity.setTravelDate(booking.getTravelDate());
+		entity.setUserId(booking.getUserId());
+		repository.saveAndFlush(entity);
 		return "Booking has been accepted";
 	}
 
@@ -95,8 +104,8 @@ public class BookingServiceImpl implements IBookingService {
 	 * : Booking - Creation Date : 10-06-2020 - Description : To get specific
 	 * details of booking by name from the database
 	 ****************************************************************************************************************************/
-	public Booking getBooking(String name) throws BookingNameNotFound {
-		Booking booking = repository.getBookingDetails(name);
+	public BookingEntity getBooking(String name) throws BookingNameNotFound {
+		BookingEntity booking = repository.getBookingDetails(name);
 		if (booking == null) {
 			throw new BookingNameNotFound("Booking not found for given name");
 		}
