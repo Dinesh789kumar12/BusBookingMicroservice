@@ -3,30 +3,30 @@ package com.cg.busbooking.booking.dto;
 import java.time.LocalDate;
 
 public class Booking {
-	private int bookingId;
-	private int userId;
+	private int bId;
+	private int uId;
 	private int busId;
-	private String name;
+	private String customerName;
 
-	private int age;
+	private int customerAge;
 	private String gender;
-	private String phone;
-	private LocalDate travelDate;
+	private String phone_no;
+	private LocalDate date;
 
-	public int getBookingId() {
-		return bookingId;
+	public int getbId() {
+		return bId;
 	}
 
-	public void setBookingId(int bookingId) {
-		this.bookingId = bookingId;
+	public void setbId(int bId) {
+		this.bId = bId;
 	}
 
-	public int getUserId() {
-		return userId;
+	public int getuId() {
+		return uId;
 	}
 
-	public void setUserId(int userId) {
-		this.userId = userId;
+	public void setuId(int uId) {
+		this.uId = uId;
 	}
 
 	public int getBusId() {
@@ -37,20 +37,20 @@ public class Booking {
 		this.busId = busId;
 	}
 
-	public String getName() {
-		return name;
+	public String getCustomerName() {
+		return customerName;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setCustomerName(String customerName) {
+		this.customerName = customerName;
 	}
 
-	public int getAge() {
-		return age;
+	public int getCustomerAge() {
+		return customerAge;
 	}
 
-	public void setAge(int age) {
-		this.age = age;
+	public void setCustomerAge(int customerAge) {
+		this.customerAge = customerAge;
 	}
 
 	public String getGender() {
@@ -61,19 +61,20 @@ public class Booking {
 		this.gender = gender;
 	}
 
-	public String getPhone() {
-		return phone;
+	public String getPhone_no() {
+		return phone_no;
 	}
 
-	public void setPhone(String phone) {
-		this.phone = phone;
+	public void setPhone_no(String phone_no) {
+		this.phone_no = phone_no;
 	}
 
-	public LocalDate getTravelDate() {
-		return travelDate;
+	public LocalDate getDate() {
+		return date;
 	}
 
-	public void setTravelDate(LocalDate travelDate) {
-		this.travelDate = travelDate;
+	public void setDate(LocalDate date) {
+		this.date = date;
 	}
+
 }

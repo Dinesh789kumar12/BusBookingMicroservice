@@ -88,13 +88,13 @@ public class BookingServiceImpl implements IBookingService {
 	 ****************************************************************************************************************************/
 	public String addBooking(Booking booking) {
 		BookingEntity entity = new BookingEntity();
-		entity.setAge(booking.getAge());
-		entity.setBookingId(booking.getBookingId());
+		entity.setAge(booking.getCustomerAge());
+		entity.setBookingId(booking.getbId());
 		entity.setBusId(booking.getBusId());
 		entity.setGender(booking.getGender());
-		entity.setPhone(booking.getPhone());
-		entity.setTravelDate(booking.getTravelDate());
-		entity.setUserId(booking.getUserId());
+		entity.setPhone(booking.getPhone_no());
+		entity.setTravelDate(booking.getDate());
+		entity.setUserId(booking.getuId());
 		repository.saveAndFlush(entity);
 		return "Booking has been accepted";
 	}
