@@ -2,7 +2,7 @@ package com.cg.busbooking.booking.exception;
 
 public class ErrorMessage {
 	private int statusCode;
-	private String errorMessage;
+	private String errorMsg;
 
 	public int getStatusCode() {
 		return statusCode;
@@ -12,12 +12,12 @@ public class ErrorMessage {
 		this.statusCode = statusCode;
 	}
 
-	public String getErrorMessage() {
-		return errorMessage;
+	public String getErrorMsg() {
+		return errorMsg;
 	}
 
-	public void setErrorMessage(String errorMessage) {
-		this.errorMessage = errorMessage;
+	public void setErrorMsg(String errorMsg) {
+		this.errorMsg = errorMsg;
 	}
 
 }

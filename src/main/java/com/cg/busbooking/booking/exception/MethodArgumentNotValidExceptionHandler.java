@@ -22,25 +22,24 @@ public class MethodArgumentNotValidExceptionHandler {
 		BindingResult result = ex.getBindingResult();
 
 		List<String> errorList = new ArrayList<>();
-		result.getFieldErrors().forEach((fieldError) -> {
-			errorList.add(fieldError.getObjectName() + "." + fieldError.getField() + " : "
-					+ fieldError.getDefaultMessage() + " : rejected value [" + fieldError.getRejectedValue() + "]");
-		});
-		result.getGlobalErrors().forEach((fieldError) -> {
-			errorList.add(fieldError.getObjectName() + " : " + fieldError.getDefaultMessage());
-		});
+		result.getFieldErrors()
+				.forEach(fieldError -> errorList.add(fieldError.getObjectName() + "." + fieldError.getField() + " : "
+						+ fieldError.getDefaultMessage() + " : rejected value [" + fieldError.getRejectedValue()
+						+ "]"));
+		result.getGlobalErrors().forEach(
+				fieldError -> errorList.add(fieldError.getObjectName() + " : " + fieldError.getDefaultMessage()));
 
 		return new Error(HttpStatus.BAD_REQUEST, errorList);
 	}
 
 	public static class Error {
 		private int errorCode;
-		private String error;
+		private String errorName;
 		private List<String> fieldErrors = new ArrayList<>();
 
-		public Error(HttpStatus status,List<String> fieldErrors) {
+		public Error(HttpStatus status, List<String> fieldErrors) {
 			this.errorCode = status.value();
-			this.error = status.name();
+			this.errorName = status.name();
 			this.fieldErrors = fieldErrors;
 		}
 
@@ -52,12 +51,12 @@ public class MethodArgumentNotValidExceptionHandler {
 			this.errorCode = errorCode;
 		}
 
-		public String getError() {
-			return error;
+		public String getErrorName() {
+			return errorName;
 		}
 
-		public void setError(String error) {
-			this.error = error;
+		public void setErrorName(String errorName) {
+			this.errorName = errorName;
 		}
 
 		public List<String> getFieldErrors() {

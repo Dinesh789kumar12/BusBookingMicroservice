@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -42,8 +43,8 @@ public class BookingController {
 
 	/****************************************************************************************************************************
 	 * - Method Name : getAllBookingDetails() - Return type : List<Booking> -
-	 * Description : To retrieve list of booking details from Booking Database
-	 * -End-point : http://localhost:9095/booking/bookingdetails
+	 * - Description : To retrieve list of booking details from Booking Database
+	 * - End-point : http://localhost:9095/booking/bookingdetails
 	 ****************************************************************************************************************************/
 	@GetMapping("/bookingdetails")
 	public List<Booking> getAllBookingDetails() {
@@ -63,8 +64,8 @@ public class BookingController {
 
 	/****************************************************************************************************************************
 	 * - Method Name : deleteBookingById - Input Parameters : BookingDto bookingId -
-	 * Return type : ResponseEntity<String> - Description : To delete booking by id
-	 * -End-point : http://localhost:9095/booking/delete
+	 * - Return type : ResponseEntity<String> - Description : To delete booking by id
+	 * - End-point : http://localhost:9095/booking/delete
 	 ****************************************************************************************************************************/
 	@DeleteMapping("/delete/{bookingId}")
 	public ResponseEntity<String> deleteBookingById(@PathVariable("bookingId") int bookingId) throws BookingIdNotFound {
@@ -73,8 +74,8 @@ public class BookingController {
 
 	/****************************************************************************************************************************
 	 * - Method Name : addBooking - Input Parameters : booking - Return type :
-	 * ResponseEntity<String> - Description : To add booking into the database
-	 * -End-point : http://localhost:9095/booking/
+	 * - ResponseEntity<String> - Description : To add booking into the database
+	 * - End-point : http://localhost:9095/booking/
 	 ****************************************************************************************************************************/
 	@PostMapping("/")
 	public ResponseEntity<String> addBooking(@Valid @RequestBody Booking booking) {
@@ -97,7 +98,7 @@ public class BookingController {
 	 * update phone number of booking by bid -End-point :
 	 * http://localhost:9095/booking/updatebookingById
 	 ****************************************************************************************************************************/
-	@GetMapping("/updatebookingById/{bid}/{phone}")
+	@PutMapping("/updatebookingById/{bid}/{phone}")
 	public ResponseEntity<String> updateBookingById(@PathVariable("bid") int bid, @PathVariable("phone") String phone)
 			throws BookingIdNotFound {
 		return ResponseEntity.ok(service.updateBookingById(bid, phone));

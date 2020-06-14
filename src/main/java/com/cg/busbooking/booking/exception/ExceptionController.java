@@ -12,7 +12,7 @@ public class ExceptionController {
 	public ResponseEntity<ErrorMessage> handleExceptionById(BookingIdNotFound e) {
 		ErrorMessage error = new ErrorMessage();
 		error.setStatusCode(HttpStatus.BAD_GATEWAY.value());
-		error.setErrorMessage(e.getMessage());
+		error.setErrorMsg(e.getMessage());
 		return new ResponseEntity<>(error, HttpStatus.OK);
 	}
 
@@ -20,7 +20,7 @@ public class ExceptionController {
 	public ResponseEntity<ErrorMessage> handleExceptionByName(BookingNameNotFound e) {
 		ErrorMessage error = new ErrorMessage();
 		error.setStatusCode(HttpStatus.BAD_GATEWAY.value());
-		error.setErrorMessage(e.getMessage());
+		error.setErrorMsg(e.getMessage());
 		return new ResponseEntity<>(error, HttpStatus.OK);
 	}
 }
